@@ -12,18 +12,18 @@ class TestFormPage extends StatefulWidget {
 class _TestFormPageState extends State<TestFormPage> {
   final formKey = GlobalKey<FormState>();
   bool? checkboxIconFormFieldValue = false;
-  String myValue = '';
+  String myValue = 'Dummy Value';
   List<Map> person = [
     {
-      'value': 1,
+      'value': 'Phone',
       'name': 'Phone',
     },
     {
-      'value': 2,
+      'value': 'Desktop',
       'name': 'Desktop',
     },
     {
-      'value': 3,
+      'value': 'Laptop',
       'name': 'Laptop',
     },
   ];
@@ -54,16 +54,23 @@ class _TestFormPageState extends State<TestFormPage> {
               display: 'name',
               context: context,
               validator: (value) {
-                if (value!) {
+                if (value.toString() == 'null') {
                   return null;
                 } else {
                   setState(() {
                     myValue = value;
-                    print(myValue);
+                    print('I am from set state 62 : $myValue');
                   });
                 }
                 return null;
               },
+              // onSaved: (value) {
+              //   setState(() {
+              //     myValue = value;
+              //     myValue = value.toString();
+              //     print(myValue);
+              //   });
+              // },
             ),
             CheckboxListTileFormField(
               title: Text('Laptop!'),
@@ -108,7 +115,12 @@ class _TestFormPageState extends State<TestFormPage> {
               },
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  // print(myValue);
+                }
+                print('I am from onPressed 122: $myValue');
+              },
               child: Text('Submit'),
             ),
           ],
