@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   radio_button_form_field: ^0.0.4
   checkbox_formfield: ^0.2.0
+  multiselect_formfield: ^0.1.7
 
 dev_dependencies:
   flutter_test:

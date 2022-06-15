@@ -12,6 +12,7 @@ class TestFormPage extends StatefulWidget {
 class _TestFormPageState extends State<TestFormPage> {
   final formKey = GlobalKey<FormState>();
   bool? checkboxIconFormFieldValue = false;
+  String myValue = '';
   List<Map> person = [
     {
       'value': 1,
@@ -47,10 +48,23 @@ class _TestFormPageState extends State<TestFormPage> {
             //     })
 
             RadioButtonFormField(
-                data: person,
-                value: 'value',
-                display: 'name',
-                context: context),
+              toggleable: true,
+              data: person,
+              value: 'value',
+              display: 'name',
+              context: context,
+              validator: (value) {
+                if (value!) {
+                  return null;
+                } else {
+                  setState(() {
+                    myValue = value;
+                    print(myValue);
+                  });
+                }
+                return null;
+              },
+            ),
             CheckboxListTileFormField(
               title: Text('Laptop!'),
               onSaved: (bool? value) {
@@ -61,6 +75,13 @@ class _TestFormPageState extends State<TestFormPage> {
                   return null;
                 } else {
                   return 'False!';
+                }
+              },
+              onChanged: (value) {
+                if (value) {
+                  print("ListTile Checked :)");
+                } else {
+                  print("ListTile Not Checked :(");
                 }
               },
             ),
@@ -85,6 +106,10 @@ class _TestFormPageState extends State<TestFormPage> {
                   print("Icon Not Checked :(");
                 }
               },
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Submit'),
             ),
           ],
         ),
