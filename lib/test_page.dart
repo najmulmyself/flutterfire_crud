@@ -32,6 +32,8 @@ class _TestFormPageState extends State<TestFormPage> {
     },
   ];
   String? select;
+
+  void onChanged(dynamic val) => print(val.toString());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +52,6 @@ class _TestFormPageState extends State<TestFormPage> {
             //         select = value.toString();
             //       });
             //     })
-
             RadioButtonFormField(
               toggleable: true,
               data: gadget,
@@ -59,6 +60,11 @@ class _TestFormPageState extends State<TestFormPage> {
               context: context,
               validator: (value) {
                 if (value.toString() == 'null') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please Select a value'),
+                    ),
+                  );
                   return null;
                 } else {
                   setState(() {
@@ -132,7 +138,7 @@ class _TestFormPageState extends State<TestFormPage> {
             FormBuilderCheckboxGroup(
               name: 'Gadget',
               orientation: OptionsOrientation.vertical,
-              options: [
+              options: const [
                 FormBuilderFieldOption(value: 'Phone'),
                 FormBuilderFieldOption(value: 'Desktop'),
                 FormBuilderFieldOption(value: 'Laptop'),
@@ -140,6 +146,21 @@ class _TestFormPageState extends State<TestFormPage> {
               ],
               wrapDirection: Axis.horizontal,
               // wrapVerticalDirection: VerticalDirection.down,
+              onChanged: onChanged,
+              validator: (value) {
+                if (value.toString() == 'null') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please Select a value'),
+                    ),
+                  );
+                  return 'fasdfsdf';
+                } else {
+                  myCheckValue = value.toString();
+                  print(myCheckValue);
+                  
+                }
+              },
             ),
 
             ElevatedButton(
@@ -147,8 +168,9 @@ class _TestFormPageState extends State<TestFormPage> {
                 if (formKey.currentState!.validate()) {
                   // print(myRadioValue);
                 }
-                print('I am from onPressed 122: $myRadioValue');
+                // print('I am from onPressed 122: $myRadioValue');
                 print(myCheckValue);
+                final snackBar = SnackBar(content: Text(''));
               },
               child: Text('Submit'),
             ),
