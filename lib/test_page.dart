@@ -167,7 +167,7 @@ class _TestFormPageState extends State<TestFormPage> {
               //   hintWidget: Text('Please choose one or more'),
               //   // initialValue: myCheckValue,
               // ),
-
+              Text('Select A gadget'),
               FormBuilderCheckboxGroup(
                 name: 'Gadget',
                 orientation: OptionsOrientation.vertical,
@@ -176,6 +176,34 @@ class _TestFormPageState extends State<TestFormPage> {
                   FormBuilderFieldOption(value: 'Desktop'),
                   FormBuilderFieldOption(value: 'Laptop'),
                   FormBuilderFieldOption(value: 'Tablet'),
+                ],
+                wrapDirection: Axis.horizontal,
+                // wrapVerticalDirection: VerticalDirection.down,
+                onSaved: onChanged,
+                validator: (value) {
+                  if (value.toString() == 'null') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please Select a value'),
+                      ),
+                    );
+                    return null;
+                  } else {
+                    myCheckValue = value.toString();
+                    print(myCheckValue);
+                  }
+                },
+              ),
+              Text('Select A Language'),
+
+              FormBuilderCheckboxGroup(
+                name: 'Language',
+                orientation: OptionsOrientation.vertical,
+                options: const [
+                  FormBuilderFieldOption(value: 'C'),
+                  FormBuilderFieldOption(value: 'Go'),
+                  FormBuilderFieldOption(value: 'Python'),
+                  FormBuilderFieldOption(value: 'Java'),
                 ],
                 wrapDirection: Axis.horizontal,
                 // wrapVerticalDirection: VerticalDirection.down,
