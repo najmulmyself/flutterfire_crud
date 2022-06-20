@@ -16,9 +16,16 @@ class TestFormPage extends StatefulWidget {
 class _TestFormPageState extends State<TestFormPage> {
   final formKey = GlobalKey<FormState>();
 
+  TextEditingController myUserName = TextEditingController();
+  TextEditingController myFirstName = TextEditingController();
+  TextEditingController myLastName = TextEditingController();
+  TextEditingController myPass = TextEditingController();
+  TextEditingController myConfirmPass = TextEditingController();
+
   bool? checkboxIconFormFieldValue = false;
   String myRadioValue = 'Dummy Value';
   String myCheckValue = '';
+  String myDropDownValue = '';
   List<Map> gadget = [
     {
       'value': 'Phone',
@@ -47,6 +54,10 @@ class _TestFormPageState extends State<TestFormPage> {
       'name': 'Javascript',
     },
   ];
+  bool _ageHasError = false;
+  bool _genderHasError = false;
+  var genderOptions = ['Male', 'Female', 'Other'];
+
   String? select;
 
   void onChanged(dynamic val) => print(val.toString());
@@ -226,13 +237,13 @@ class _TestFormPageState extends State<TestFormPage> {
                 },
               ),
 
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {}
-                  // print(myCheckValue);
-                },
-                child: Text('Submit'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     if (formKey.currentState!.validate()) {}
+              //     // print(myCheckValue);
+              //   },
+              //   child: Text('Submit'),
+              // ),
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(
@@ -240,6 +251,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: TextField(
+                        controller: myUserName,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'User Name',
@@ -250,6 +262,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: TextField(
+                        controller: myFirstName,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'First Name',
@@ -260,6 +273,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: TextField(
+                        controller: myLastName,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Last Name',
@@ -270,6 +284,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: TextField(
+                        controller: myPass,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -281,6 +296,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     Padding(
                       padding: EdgeInsets.all(15),
                       child: TextField(
+                        controller: myConfirmPass,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -289,9 +305,52 @@ class _TestFormPageState extends State<TestFormPage> {
                         ),
                       ),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {}
+                        // print(myCheckValue);
+                        print(myUserName.text);
+                        print(myFirstName.text);
+                        print(myLastName.text);
+                        print(myPass.text);
+                        print(myConfirmPass.text);
+                      },
+                      child: Text('Submit'),
+                    ),
                   ],
                 ),
-              )
+              ),
+              FormBuilderDropdown<String>(
+                // autovalidate: true,
+                name: 'gender',
+                decoration: InputDecoration(
+                  labelText: 'Gender',
+             
+                ),
+                hint: const Text('Select Gender'),
+                items: genderOptions
+                    .map((gender) => DropdownMenuItem(
+                          alignment: AlignmentDirectional.center,
+                          value: gender,
+                          child: Text(gender),
+                        ))
+                    .toList(),
+                validator: (gender) {
+                  if (gender.toString() == "null") {
+                    print('dropdown value null');
+                  } else {
+                    myDropDownValue = gender.toString();
+                    print(myDropDownValue);
+                  }
+                },
+                onChanged: (val) {
+                  setState(() {
+                  
+                    print(val);
+                  });
+                },
+                valueTransformer: (val) => val?.toString(),
+              ),
             ],
           ),
         ),
