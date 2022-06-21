@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:recipe_app/api/services.dart';
 
 class Database {
   FirebaseFirestore? firestore;
@@ -30,3 +31,4 @@ class Database {
     throw Text('Error');
   }
 }
+
