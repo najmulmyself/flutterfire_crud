@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class Database {
   FirebaseFirestore? firestore;
-  initialize() {
+  initialise() {
     firestore = FirebaseFirestore.instance;
   }
 
@@ -12,7 +12,7 @@ class Database {
     QuerySnapshot querySnapshot;
     List docs = [];
     try {
-      querySnapshot = await firestore!.collection('data').get();
+      querySnapshot = await firestore!.collection('formData').get();
       if (querySnapshot.docs.isNotEmpty) {
         for (var doc in querySnapshot.docs.toList()) {
           Map a = {

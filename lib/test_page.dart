@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:radio_button_form_field/radio_button_form_field.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:recipe_app/api/database.dart';
 
 class TestFormPage extends StatefulWidget {
   TestFormPage({Key? key}) : super(key: key);
@@ -15,6 +16,17 @@ class TestFormPage extends StatefulWidget {
 
 class _TestFormPageState extends State<TestFormPage> {
   final formKey = GlobalKey<FormState>();
+  Database? db;
+  List docs = [];
+  void initalise() {
+    db = Database();
+    db!.initialise();
+    db!.read().then((value) => {
+          setState(() {
+            docs = value;
+          })
+        });
+  }
 
   TextEditingController myUserName = TextEditingController();
   TextEditingController myFirstName = TextEditingController();
@@ -325,7 +337,6 @@ class _TestFormPageState extends State<TestFormPage> {
                 name: 'gender',
                 decoration: InputDecoration(
                   labelText: 'Gender',
-             
                 ),
                 hint: const Text('Select Gender'),
                 items: genderOptions
@@ -345,12 +356,12 @@ class _TestFormPageState extends State<TestFormPage> {
                 },
                 onChanged: (val) {
                   setState(() {
-                  
                     print(val);
                   });
                 },
                 valueTransformer: (val) => val?.toString(),
               ),
+              // Text(docs.name.to),
             ],
           ),
         ),

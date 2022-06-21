@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/api/test_store.dart';
 import 'package:recipe_app/test_page.dart';
 
 Future<void> main() async {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: TestFormPage(),
+      home: TestStore(),
     );
   }
 }
