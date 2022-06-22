@@ -85,48 +85,48 @@ class _TestStoreState extends State<TestStore> {
 
     final _auth = FirebaseAuth.instance;
     await _auth.verifyPhoneNumber(
-        phoneNumber: phone,
-        verificationCompleted: (phone) {},
-        verificationFailed: (FirebaseAuthException exception) {
-          print(exception);
-        },
-        codeSent: (String? verificationId, int? resendToken) {
-          showDialog(
-              context: context,
-              builder: (ctx) {
-                return AlertDialog(
-                  title: Text('Enter the code'),
-                  content: Column(
-                    children: [
-                      TextField(
-                        controller: pinController,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          var code = pinController.text;
-                          PhoneAuthCredential phoneAuthCredential =
-                              PhoneAuthProvider.credential(
-                                  verificationId: verificationId!,
-                                  smsCode: code);
-                          final result = await _auth
-                              .signInWithCredential(phoneAuthCredential);
-                          if (result != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (ctx) => TestFormPage(),
-                              ),
-                            );
-                          }
-                        },
-                        child: Text('Verify Code'),
-                      ),
-                    ],
-                  ),
-                );
-              });
-        },
-        codeAutoRetrievalTimeout: (String? verificationId) {});
+      phoneNumber: phone,
+      verificationCompleted: (phone) {},
+      verificationFailed: (FirebaseAuthException exception) {
+        print(exception);
+      },
+      codeSent: (String? verificationId, int? resendToken) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                title: Text('Enter the code'),
+                content: Column(
+                  children: [
+                    TextField(
+                      controller: pinController,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        var code = pinController.text;
+                        PhoneAuthCredential phoneAuthCredential =
+                            PhoneAuthProvider.credential(
+                                verificationId: verificationId!, smsCode: code);
+                        final result = await _auth
+                            .signInWithCredential(phoneAuthCredential);
+                        if (result != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (ctx) => TestFormPage(),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text('Verify Code'),
+                    ),
+                  ],
+                ),
+              );
+            });
+      },
+      codeAutoRetrievalTimeout: (String? verificationId) {},
+    );
   }
 
   TextEditingController emailController = TextEditingController();
