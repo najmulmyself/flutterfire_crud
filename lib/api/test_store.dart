@@ -24,6 +24,9 @@ class _TestStoreState extends State<TestStore> {
       var email = emailController.text;
       var password = passwordController.text;
       // Map<String, dynamic> user = {"email": email, "password": password};
+      final userCredential = FirebaseAuth.instance;
+          final userC = userCredential.createUserWithEmailAndPassword(email: email, password: password);
+      print(userC);
 
       return user
           .add({
