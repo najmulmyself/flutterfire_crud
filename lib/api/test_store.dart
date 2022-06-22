@@ -50,7 +50,7 @@ class _TestStoreState extends State<TestStore> {
       // }
 
       try {
-        final userCredential = FirebaseAuth.instance
+        final userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         print(userCredential);
       } on FirebaseAuthException catch (e) {
@@ -80,8 +80,60 @@ class _TestStoreState extends State<TestStore> {
     }
   }
 
+  Future<void>? _verifyNum() async {
+    var phone = phoneController.text;
+
+    final _auth = FirebaseAuth.instance;
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (phone) {},
+        verificationFailed: (FirebaseAuthException exception) {
+          print(exception);
+        },
+        codeSent: (String? verificationId, int? resendToken) {
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: Text('Enter the code'),
+                  content: Column(
+                    children: [
+                      TextField(
+                        controller: pinController,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          var code = pinController.text;
+                          PhoneAuthCredential phoneAuthCredential =
+                              PhoneAuthProvider.credential(
+                                  verificationId: verificationId!,
+                                  smsCode: code);
+                          final result = await _auth
+                              .signInWithCredential(phoneAuthCredential);
+                          if (result != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (ctx) => TestFormPage(),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Verify Code'),
+                      ),
+                    ],
+                  ),
+                );
+              });
+        },
+        codeAutoRetrievalTimeout: (String? verificationId) {});
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController pinController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,6 +174,29 @@ class _TestStoreState extends State<TestStore> {
                   _addUser();
                 },
                 child: Text('Create User'),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              child: TextField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Your Phone Number',
+                  labelText: 'Phone Number',
+                ),
+              ),
+            ),
+            Container(
+              height: 40,
+              margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              width: double.infinity,
+              color: Colors.blue,
+              child: ElevatedButton(
+                onPressed: () {
+                  _verifyNum();
+                },
+                child: Text('Send Code'),
               ),
             ),
           ],
