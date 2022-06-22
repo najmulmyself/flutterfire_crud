@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
+// import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:recipe_app/test_page.dart';
 
 class TestStore extends StatefulWidget {
   TestStore({Key? key}) : super(key: key);
@@ -18,25 +22,54 @@ class _TestStoreState extends State<TestStore> {
   final CollectionReference user =
       FirebaseFirestore.instance.collection('users');
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<void>? _addUser() {
+  Future<void>? _addUser() async {
     try {
+      // final FirebaseAuth _auth = FirebaseAuth.instance;
       var email = emailController.text;
       var password = passwordController.text;
       // Map<String, dynamic> user = {"email": email, "password": password};
-      final userCredential = FirebaseAuth.instance;
-          final userC = userCredential.createUserWithEmailAndPassword(email: email, password: password);
-      print(userC);
+      // final userCredential = FirebaseAuth.instance;
+      //     final userC = userCredential.createUserWithEmailAndPassword(email: email, password: password);
+      // print(userC);
 
-      return user
-          .add({
-            "email": email,
-            "password": password,
-          })
-          .then(
-            (value) => print('User added'),
-          )
-          .catchError(() => print('has error'));
+      // try {
+      //   final credential =
+      //       _auth.signInWithEmailAndPassword(email: email, password: password);
+      //   print('This is the data of ${credential}');
+      //   if (credential != 'null') {
+      //     print('Logged IN');
+      //     Navigator.push(
+      //         context, CupertinoPageRoute(builder: (ctx) => TestFormPage()));
+      //   } else {
+      //     // print("Error");
+      //   }
+      // } on FirebaseAuthException catch (e) {
+      //   if (e.code == 'user-not-found') {
+      //     print('user not found');
+      //   }
+      // }
+
+      try {
+        final userCredential = FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        print(userCredential);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('user not found');
+        } else {
+          print('nothing happend exept error');
+        }
+      }
+
+      // return user
+      //     .add({
+      //       "email": email,
+      //       "password": password,
+      //     })
+      //     .then(
+      //       (value) => print('User added'),
+      //     )
+      //     .catchError(() => print('has error'));
 
       // setState(() {
       //   email = '';
