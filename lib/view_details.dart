@@ -9,16 +9,24 @@ class ViewDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Details'),
-      ),
-      body: Card(
-          child: ListView.builder(
-        itemBuilder: (_, i) {
-          return Text(checkValue[i]);
-        },
-        itemCount: checkValue.length,
-      )),
-    );
+        appBar: AppBar(
+          title: Text('Details'),
+        ),
+        body: Column(
+          children: [
+            Container(
+              height: 400,
+              width: 300,
+              child: ListView.builder(
+                itemBuilder: (_, i) {
+                  return Text(checkValue[i]);
+                },
+                itemCount: checkValue.length,
+              ),
+            ),
+            Text(firstName),
+            Text(lastName),
+          ],
+        ));
   }
 }
