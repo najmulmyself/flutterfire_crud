@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:radio_button_form_field/radio_button_form_field.dart';
@@ -8,25 +9,48 @@ import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:recipe_app/api/database.dart';
 
 class TestFormPage extends StatefulWidget {
-  TestFormPage({Key? key}) : super(key: key);
-
+  late String? uid;
+  TestFormPage({this.uid});
   @override
   State<TestFormPage> createState() => _TestFormPageState();
 }
 
 class _TestFormPageState extends State<TestFormPage> {
+  late String? uid = widget.uid;
   final formKey = GlobalKey<FormState>();
-  Database? db;
-  List docs = [];
-  void initalise() {
-    db = Database();
-    db!.initialise();
-    db!.read().then((value) => {
-          setState(() {
-            docs = value;
-          })
-        });
+  // final DocumentReference user =
+  // FirebaseFirestore.instance.collection('users').doc('uid');
+
+  Future<void>? addData() async {
+    final CollectionReference user = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('form');
+
+    user
+        .add({
+          "username": myUserName.text,
+          "firsname": myFirstName.text,
+          "lastname": myLastName.text,
+          "password": myPass.text,
+        })
+        .then((value) => print('added data for $uid'))
+        .catchError((error) => print(error));
   }
+
+  // Database? db;
+  // List docs = [];
+  // void initalise() {
+  //   db = Database();
+  //   db!.initialise();
+  //   db!.read().then(
+  //         (value) => {
+  //           setState(() {
+  //             docs = value;
+  //           })
+  //         },
+  //       );
+  // }
 
   TextEditingController myUserName = TextEditingController();
   TextEditingController myFirstName = TextEditingController();
@@ -326,6 +350,8 @@ class _TestFormPageState extends State<TestFormPage> {
                         print(myLastName.text);
                         print(myPass.text);
                         print(myConfirmPass.text);
+
+                        addData();
                       },
                       child: Text('Submit'),
                     ),
@@ -361,7 +387,7 @@ class _TestFormPageState extends State<TestFormPage> {
                 },
                 valueTransformer: (val) => val?.toString(),
               ),
-              // Text(docs.name.to), 
+              // Text(docs.name.to),
             ],
           ),
         ),

@@ -49,27 +49,27 @@ class _TestStoreState extends State<TestStore> {
       //   }
       // }
 
-      try {
-        final userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
-        print(userCredential);
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          print('user not found');
-        } else {
-          print('nothing happend exept error');
-        }
-      }
+      // try {
+      //   final userCredential = await FirebaseAuth.instance
+      //       .signInWithEmailAndPassword(email: email, password: password);
+      //   print(userCredential);
+      // } on FirebaseAuthException catch (e) {
+      //   if (e.code == 'user-not-found') {
+      //     print('user not found');
+      //   } else {
+      //     print('nothing happend exept error');
+      //   }
+      // }
 
-      // return user
-      //     .add({
-      //       "email": email,
-      //       "password": password,
-      //     })
-      //     .then(
-      //       (value) => print('User added'),
-      //     )
-      //     .catchError(() => print('has error'));
+      return user
+          .add({
+            "email": email,
+            "password": password,
+          })
+          .then(
+            (value) => print('User added'),
+          )
+          .catchError(() => print('has error'));
 
       // setState(() {
       //   email = '';

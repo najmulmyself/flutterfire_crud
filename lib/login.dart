@@ -20,9 +20,10 @@ class _SignInState extends State<SignIn> {
 
     final _auth = FirebaseAuth.instance;
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      print(userCredential);
+      final UserCredential? userCredential = await _auth
+          .signInWithEmailAndPassword(email: email, password: password);
+      print(userCredential!.user!.uid);
+      final uid = userCredential!.user!.uid;
       if (userCredential != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -38,7 +39,7 @@ class _SignInState extends State<SignIn> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (ctx) => TestFormPage(),
+            builder: (ctx) => TestFormPage(uid: uid,),
           ),
         );
       }
