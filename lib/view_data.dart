@@ -67,7 +67,7 @@ class _ViewDataState extends State<ViewData> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ViewDetails()));
+                          MaterialPageRoute(builder: (_) => ViewDetails(firstName: data['firsname'],lastName: data['lastname'],checkValue: data['myCheckValue1'],)));
                     },
                     child: Container(
                       child: Text(

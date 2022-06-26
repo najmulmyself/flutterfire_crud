@@ -76,8 +76,8 @@ class _TestFormPageState extends State<TestFormPage> {
   bool? checkboxIconFormFieldValue = false;
   String myRadioValue1 = '';
   String myRadioValue2 = '';
-  String myCheckValue1 = '';
-  String myCheckValue2 = '';
+  List myCheckValue1 = [];
+  List myCheckValue2 = [];
   String myDropDownValue = '';
   List<Map> gadget = [
     {
@@ -122,7 +122,11 @@ class _TestFormPageState extends State<TestFormPage> {
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (ctx) => ViewData(uid: uid,)));
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => ViewData(
+                            uid: uid,
+                          )));
             },
             child: Text('ViewData'),
           ),
@@ -256,7 +260,7 @@ class _TestFormPageState extends State<TestFormPage> {
                 // wrapVerticalDirection: VerticalDirection.down,
                 onSaved: onChanged,
                 validator: (value) {
-                  if (value.toString() == 'null') {
+                  if (value == 'null') {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Please Select a value'),
@@ -264,7 +268,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     );
                     return null;
                   } else {
-                    myCheckValue1 = value.toString();
+                    myCheckValue1 = value!;
                     print(myCheckValue1);
                   }
                 },
@@ -292,7 +296,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     );
                     return null;
                   } else {
-                    myCheckValue2 = value.toString();
+                    myCheckValue2 = value!;
                     print(myCheckValue2);
                   }
                   return null;
