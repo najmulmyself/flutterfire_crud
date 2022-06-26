@@ -33,7 +33,7 @@ class _RegistrationState extends State<Registration> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (ctx) => TestFormPage(),
+            builder: (ctx) => SignIn(),
           ),
         );
       }
@@ -85,10 +85,13 @@ class _RegistrationState extends State<Registration> {
               ),
             ),
             Text('Already have an account?'),
-            GestureDetector(onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (ctx)=> SignIn()));
-              
-            }, child: Text('Sign In'),),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (ctx) => SignIn()));
+              },
+              child: Text('Sign In'),
+            ),
           ],
         ),
       ),

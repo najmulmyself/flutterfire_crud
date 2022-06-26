@@ -33,6 +33,12 @@ class _TestFormPageState extends State<TestFormPage> {
           "firsname": myFirstName.text,
           "lastname": myLastName.text,
           "password": myPass.text,
+          "myCheckValue1":myCheckValue1,
+          "myCheckValue2":myCheckValue2,
+          "myDropdownValue":myDropDownValue,
+          "myRadioValue1": myRadioValue1,
+          "myRadioValue2": myRadioValue2,
+          
         })
         .then((value) => print('added data for $uid'))
         .catchError((error) => print(error));
@@ -59,8 +65,10 @@ class _TestFormPageState extends State<TestFormPage> {
   TextEditingController myConfirmPass = TextEditingController();
 
   bool? checkboxIconFormFieldValue = false;
-  String myRadioValue = 'Dummy Value';
-  String myCheckValue = '';
+  String myRadioValue1 = '';
+  String myRadioValue2 = '';
+  String myCheckValue1 = '';
+  String myCheckValue2 = '';
   String myDropDownValue = '';
   List<Map> gadget = [
     {
@@ -133,8 +141,8 @@ class _TestFormPageState extends State<TestFormPage> {
                     return null;
                   } else {
                     setState(() {
-                      myRadioValue = value;
-                      print(myRadioValue);
+                      myRadioValue1 = value;
+                      print(myRadioValue1);
                     });
                   }
                   return null;
@@ -157,8 +165,8 @@ class _TestFormPageState extends State<TestFormPage> {
                     return null;
                   } else {
                     setState(() {
-                      myRadioValue = value;
-                      print(myRadioValue);
+                      myRadioValue2 = value;
+                      print(myRadioValue2);
                     });
                   }
                   return null;
@@ -238,8 +246,8 @@ class _TestFormPageState extends State<TestFormPage> {
                     );
                     return null;
                   } else {
-                    myCheckValue = value.toString();
-                    print(myCheckValue);
+                    myCheckValue1 = value.toString();
+                    print(myCheckValue1);
                   }
                 },
               ),
@@ -266,8 +274,8 @@ class _TestFormPageState extends State<TestFormPage> {
                     );
                     return null;
                   } else {
-                    myCheckValue = value.toString();
-                    print(myCheckValue);
+                    myCheckValue2 = value.toString();
+                    print(myCheckValue2);
                   }
                   return null;
                 },
