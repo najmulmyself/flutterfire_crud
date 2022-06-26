@@ -12,7 +12,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-   TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Future<void>? _addUser() async {
     var email = emailController.text;
@@ -26,7 +26,13 @@ class _SignInState extends State<SignIn> {
       if (userCredential != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Logged in Successfully'),
+            backgroundColor: Colors.green,
+            content: Text(
+              'Logged in Successfully',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         );
         Navigator.push(
@@ -37,14 +43,35 @@ class _SignInState extends State<SignIn> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Incorrect email/password!'),
+            backgroundColor: Colors.red,
+            content: Text(
+              'Incorrect password!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         );
+      } else if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              'Incorrect email!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      }
       print(e);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,10 +115,13 @@ class _SignInState extends State<SignIn> {
               ),
             ),
             Text('New User?'),
-            GestureDetector(onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (ctx)=> SignIn()));
-              
-            }, child: Text('Sign Up'),),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (ctx) => SignIn()));
+              },
+              child: Text('Sign Up'),
+            ),
           ],
         ),
       ),
