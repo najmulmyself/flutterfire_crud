@@ -7,6 +7,7 @@ import 'package:radio_button_form_field/radio_button_form_field.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:recipe_app/api/database.dart';
+import 'package:recipe_app/view_data.dart';
 
 class TestFormPage extends StatefulWidget {
   late String? uid;
@@ -33,16 +34,24 @@ class _TestFormPageState extends State<TestFormPage> {
           "firsname": myFirstName.text,
           "lastname": myLastName.text,
           "password": myPass.text,
-          "myCheckValue1":myCheckValue1,
-          "myCheckValue2":myCheckValue2,
-          "myDropdownValue":myDropDownValue,
+          "myCheckValue1": myCheckValue1,
+          "myCheckValue2": myCheckValue2,
+          "myDropdownValue": myDropDownValue,
           "myRadioValue1": myRadioValue1,
           "myRadioValue2": myRadioValue2,
-          
         })
         .then((value) => print('added data for $uid'))
         .catchError((error) => print(error));
   }
+
+  // Future ? viewData() async{
+  //   // CollectionReference user = FirebaseFirestore.instance
+  //   //     .collection('users')
+  //   //     .doc(uid)
+  //   //     .collection('form');
+
+  //   return await ViewData(uid: uid!,);
+  // }
 
   // Database? db;
   // List docs = [];
@@ -109,6 +118,15 @@ class _TestFormPageState extends State<TestFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => ViewData(uid: uid,)));
+            },
+            child: Text('ViewData'),
+          ),
+        ],
         title: Text('Form'),
       ),
       body: Form(
