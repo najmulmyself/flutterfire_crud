@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data.dart';
+import 'package:recipe_app/view_details.dart';
 
 class ViewData extends StatefulWidget {
   late String? uid;
@@ -62,14 +63,18 @@ class _ViewDataState extends State<ViewData> {
             return ListView.builder(
               itemBuilder: (_, i) {
                 final data = docs[i].data();
-                return ListTile(
-                  title: Text(
-                    '${data['myRadioValue1']}',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  subtitle: Text(
-                    '${data['lastname']}',
-                    style: TextStyle(fontSize: 30),
+                return Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ViewDetails()));
+                    },
+                    child: Container(
+                      child: Text(
+                        'Full Name ${data['firsname']} ${data['lastname']}',
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
                   ),
                 );
               },
