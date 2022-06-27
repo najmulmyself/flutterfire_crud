@@ -69,12 +69,14 @@ class _ViewDataState extends State<ViewData> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => ViewDetails(firstName: data['firsname'],lastName: data['lastname'],checkValue: data['myCheckValue1'],)));
                     },
-                    child: Container(
-                      child: Text(
-                        'Full Name ${data['firsname']} ${data['lastname']}',
-                        style: TextStyle(fontSize: 40),
-                      ),
-                    ),
+                    child:
+                    //  Container(
+                    //   child: Text(
+                    //     'Full Name ${data['firsname']} ${data['lastname']}',
+                    //     style: TextStyle(fontSize: 40),
+                    //   ),
+                    // ),
+                    Card(child: ListTile(title: Text('${data['firsname']} ${data['lastname']}'),subtitle: Text('${data['username']}'),))
                   ),
                 );
               },

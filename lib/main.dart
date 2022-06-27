@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/api/test_store.dart';
-import 'package:recipe_app/registration.dart';
-import 'package:recipe_app/test_page.dart';
+import 'package:recipe_app/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner:false,
       title: 'Material App',
-      home: Registration(),
+      home: SignIn(),
     );
   }
 }
