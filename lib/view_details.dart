@@ -16,13 +16,21 @@ class ViewDetails extends StatelessWidget {
       body: Column(
         children: [
           
-         for (var item in checkValue) Column(children: [
-          Text(item),
-         ],),
-          Text(firstName),
-          Text(lastName),
+          Text("First Name : $firstName"),
+          Text("Last Name : $lastName"),
+          Card(
+            child: Column(
+              children: [
+                Text("Checked Item"),
+                   for (var item in checkValue) Column(children: [
+            Text(item),
+                   ],),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
