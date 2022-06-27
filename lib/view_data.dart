@@ -41,6 +41,9 @@ class _ViewDataState extends State<ViewData> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = widget.uid;
+    print(" from view data : $uid");
+
     CollectionReference user = FirebaseFirestore.instance
         .collection('users')
         .doc(widget.uid)
@@ -65,25 +68,35 @@ class _ViewDataState extends State<ViewData> {
                 final data = docs[i].data();
                 return Center(
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ViewDetails(firstName: data['firsname'],lastName: data['lastname'],checkValue: data['myCheckValue1'],)));
-                    },
-                    child:
-                    //  Container(
-                    //   child: Text(
-                    //     'Full Name ${data['firsname']} ${data['lastname']}',
-                    //     style: TextStyle(fontSize: 40),
-                    //   ),
-                    // ),
-                    Card(child: ListTile(title: Text('${data['firsname']} ${data['lastname']}'),subtitle: Text('${data['username']}'),))
-                  ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ViewDetails(
+                                      firstName: data['firsname'],
+                                      lastName: data['lastname'],
+                                      checkValue: data['myCheckValue1'],
+                                      uid: uid,
+                                    )));
+                      },
+                      child:
+                          //  Container(
+                          //   child: Text(
+                          //     'Full Name ${data['firsname']} ${data['lastname']}',
+                          //     style: TextStyle(fontSize: 40),
+                          //   ),
+                          // ),
+                          Card(
+                              child: ListTile(
+                        title: Text('${data['firsname']} ${data['lastname']}'),
+                        subtitle: Text('${data['username']}'),
+                      ))),
                 );
               },
               itemCount: docs.length,
             );
           }
-          return Container(
+          return Center(
             child: CircularProgressIndicator(),
           );
         },
