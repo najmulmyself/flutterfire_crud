@@ -88,7 +88,10 @@ class _ViewDataState extends State<ViewData> {
                                     docId: docs[i].id,
                                     firstName: data['firsname'],
                                     lastName: data['lastname'],
-                                    checkValue: data['myCheckValue1'],
+                                    checkValue1: data['myCheckValue1'],
+                                    checkValue2:data['myCheckValue2'],
+                                    dropDownValue:data['myDropDownValue'],
+                                    radioValue:data['myRadioValue1'],
                                     uid: uid,
                                   )));
                     },
@@ -101,26 +104,26 @@ class _ViewDataState extends State<ViewData> {
                         // ),
                         Card(
                       child: ListTile(
-                        leading: GestureDetector(
-                          onTap: () {
-                            CollectionReference usr =
-                                FirebaseFirestore.instance.collection('users');
-                            usr
-                                .doc(widget.uid)
-                                .collection('form')
-                                .doc(docs[i].id)
-                                .update(
-                              {
-                                "firsname": "Najmul",
-                                "lastname": "Huda",
-                                "username": "najmulmyself"
-                              },
-                            ).then(
-                              (value) => print('Data Updated'),
-                            );
-                          },
-                          child: Icon(Icons.edit),
-                        ),
+                        // leading: GestureDetector(
+                        //   onTap: () {
+                        //     CollectionReference usr =
+                        //         FirebaseFirestore.instance.collection('users');
+                        //     usr
+                        //         .doc(widget.uid)
+                        //         .collection('form')
+                        //         .doc(docs[i].id)
+                        //         .update(
+                        //       {
+                        //         "firsname": "Najmul",
+                        //         "lastname": "Huda",
+                        //         "username": "najmulmyself"
+                        //       },
+                        //     ).then(
+                        //       (value) => print('Data Updated'),
+                        //     );
+                        //   },
+                        //   child: Icon(Icons.edit),
+                        // ),
                         title: Text('${data['firsname']} ${data['lastname']}'),
                         subtitle: Text('${data['username']}'),
                         trailing: GestureDetector(

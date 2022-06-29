@@ -9,12 +9,23 @@ import 'package:recipe_app/data.dart';
 class ViewDetails extends StatelessWidget {
   final firstName;
   final lastName;
-  final checkValue;
+  final checkValue1;
+  final checkValue2;
   final uid;
   final docId;
+  final dropDownValue;
+  final radioValue;
 
-  ViewDetails(
-      {this.firstName, this.lastName, this.checkValue, this.uid, this.docId});
+  ViewDetails({
+    this.firstName,
+    this.lastName,
+    this.checkValue1,
+    this.uid,
+    this.docId,
+    this.checkValue2,
+    this.dropDownValue,
+    this.radioValue,
+  });
   @override
   Widget build(BuildContext context) {
     // Future updateData() async {
@@ -77,20 +88,20 @@ class ViewDetails extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                   CollectionReference user = FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .collection('form');
+                  CollectionReference user = FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(uid)
+                      .collection('form');
 
-      user.doc(docId).update(
-        {
-          "firsname": updateFirstName.text,
-          "lastname": updateLastName.text,
-          "username": updateUserName.text
-        },
-      ).then(
-        (value) => Navigator.of(context).pop(),
-      );
+                  user.doc(docId).update(
+                    {
+                      "firsname": updateFirstName.text,
+                      "lastname": updateLastName.text,
+                      "username": updateUserName.text
+                    },
+                  ).then(
+                    (value) => Navigator.of(context).pop(),
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(14),
@@ -104,7 +115,6 @@ class ViewDetails extends StatelessWidget {
       // print(updateFirstName.text);
       // print(updateUserName.text);
       // print(updateLastName.text);
-     
     }
 
     return Scaffold(
@@ -112,14 +122,31 @@ class ViewDetails extends StatelessWidget {
         title: Text('Details'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("First Name : $firstName"),
-          Text("Last Name : $lastName"),
+          Text(
+            "First Name : $firstName",
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            "Last Name :$lastName",
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            "UserName :",
+            style: TextStyle(fontSize: 20),
+          ),
+          Text("Checked Item"),
           Card(
             child: Column(
               children: [
-                Text("Checked Item"),
-                for (var item in checkValue)
+                for (var item in checkValue1)
+                  Column(
+                    children: [
+                      Text(item),
+                    ],
+                  ),
+                for (var item in checkValue2)
                   Column(
                     children: [
                       Text(item),
@@ -128,6 +155,11 @@ class ViewDetails extends StatelessWidget {
               ],
             ),
           ),
+                  Text('RadioValue'),
+                  Text(' $radioValue'),
+
+                  Text('DropDown Value'),
+                  Text(' $dropDownValue'),
           ElevatedButton(
             onPressed: () {
               showDia();
