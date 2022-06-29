@@ -68,29 +68,38 @@ class _ViewDataState extends State<ViewData> {
                 final data = docs[i].data();
                 return Center(
                   child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => ViewDetails(
-                                      firstName: data['firsname'],
-                                      lastName: data['lastname'],
-                                      checkValue: data['myCheckValue1'],
-                                      uid: uid,
-                                    )));
-                      },
-                      child:
-                          //  Container(
-                          //   child: Text(
-                          //     'Full Name ${data['firsname']} ${data['lastname']}',
-                          //     style: TextStyle(fontSize: 40),
-                          //   ),
-                          // ),
-                          Card(
-                              child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ViewDetails(
+                                    firstName: data['firsname'],
+                                    lastName: data['lastname'],
+                                    checkValue: data['myCheckValue1'],
+                                    uid: uid,
+                                  )));
+                    },
+                    child:
+                        //  Container(
+                        //   child: Text(
+                        //     'Full Name ${data['firsname']} ${data['lastname']}',
+                        //     style: TextStyle(fontSize: 40),
+                        //   ),
+                        // ),
+                        Card(
+                      child: ListTile(
+                        leading: GestureDetector(
+                          onTap: () {
+                            
+                          },
+                          child: Icon(Icons.edit),
+                        ),
                         title: Text('${data['firsname']} ${data['lastname']}'),
                         subtitle: Text('${data['username']}'),
-                      ))),
+                        trailing: Icon(Icons.delete),
+                      ),
+                    ),
+                  ),
                 );
               },
               itemCount: docs.length,
