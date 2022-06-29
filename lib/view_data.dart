@@ -64,6 +64,7 @@ class _ViewDataState extends State<ViewData> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             final docs = snapshot.data!.docs;
+            print(docs[0].id);
             return ListView.builder(
               itemBuilder: (_, i) {
                 // snapshot.data.docs.forEach(
@@ -110,14 +111,22 @@ class _ViewDataState extends State<ViewData> {
                         subtitle: Text('${data['username']}'),
                         trailing: GestureDetector(
                           onTap: () {
-                            snapshot.data.docs.forEach(
-                              (element) {
-                                docId = element.id;
-                            print(docId);
-                              },
-                            );
-                            user.doc(docId);
-                            print(docId);
+                            // print(docs[i].id);
+                            user
+                                .doc(docs[i].id)
+                                .delete()
+                                .then(
+                                  (value) => ScaffoldMessenger.of(context)
+                                      .showSnackBar(
+                                    SnackBar(
+                                      content: Text('Deleted Successfully'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  ),
+                                )
+                                .catchError((error) {
+                              return Text('Error');
+                            });
                           },
                           child: Icon(Icons.delete),
                         ),

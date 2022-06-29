@@ -382,6 +382,8 @@ class _TestFormPageState extends State<TestFormPage> {
                         print(myConfirmPass.text);
 
                         addData();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Added Data Successfully'),backgroundColor: Colors.green,));
                       },
                       child: Text('Submit'),
                     ),
