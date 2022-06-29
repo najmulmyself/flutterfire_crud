@@ -112,21 +112,27 @@ class _ViewDataState extends State<ViewData> {
                         trailing: GestureDetector(
                           onTap: () {
                             // print(docs[i].id);
-                            user
+                           if(i >= 0){
+                             user
                                 .doc(docs[i].id)
                                 .delete()
                                 .then(
                                   (value) => ScaffoldMessenger.of(context)
                                       .showSnackBar(
                                     SnackBar(
-                                      content: Text('Deleted Successfully'),
-                                      backgroundColor: Colors.green,
+                                      content: Text('Deleted Successfully',style: TextStyle(color: Colors.black),),
+                                      backgroundColor: Colors.yellow,
+                                      
                                     ),
                                   ),
                                 )
                                 .catchError((error) {
                               return Text('Error');
                             });
+                            
+                           }else{
+                              Text('No Data');
+                            }
                           },
                           child: Icon(Icons.delete),
                         ),
