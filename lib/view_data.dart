@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data.dart';
+import 'package:recipe_app/test_page.dart';
 import 'package:recipe_app/view_details.dart';
 
 class ViewData extends StatefulWidget {
@@ -14,6 +15,7 @@ class ViewData extends StatefulWidget {
 class _ViewDataState extends State<ViewData> {
   List data = [];
   String docId = "";
+  var errormsg = Text('No data Found');
   // late String? uid = widget.uid;
 
   // final user;
@@ -62,9 +64,12 @@ class _ViewDataState extends State<ViewData> {
             .collection('form')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data.size == 0) {
+            return Center(child: Text('No Data found'));
+          }
+          else if (snapshot.hasData) {
             final docs = snapshot.data!.docs;
-            print(docs[0].id);
+            // print(docs[0].id);
             return ListView.builder(
               itemBuilder: (_, i) {
                 // snapshot.data.docs.forEach(
@@ -112,26 +117,28 @@ class _ViewDataState extends State<ViewData> {
                         trailing: GestureDetector(
                           onTap: () {
                             // print(docs[i].id);
-                           if(i >= 0){
-                             user
-                                .doc(docs[i].id)
-                                .delete()
-                                .then(
-                                  (value) => ScaffoldMessenger.of(context)
-                                      .showSnackBar(
-                                    SnackBar(
-                                      content: Text('Deleted Successfully',style: TextStyle(color: Colors.black),),
-                                      backgroundColor: Colors.yellow,
-                                      
+                            print(docs);
+                            if (docs == 0) {
+                              Center(child: Text('No Data Found'));
+                            } else if (i >= 0) {
+                              user
+                                  .doc(docs[i].id)
+                                  .delete()
+                                  .then(
+                                    (value) => ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Deleted Successfully',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        backgroundColor: Colors.yellow,
+                                      ),
                                     ),
-                                  ),
-                                )
-                                .catchError((error) {
-                              return Text('Error');
-                            });
-                            
-                           }else{
-                              Text('No Data');
+                                  )
+                                  .catchError((error) {
+                                return Text('Error');
+                              });
                             }
                           },
                           child: Icon(Icons.delete),
@@ -147,6 +154,7 @@ class _ViewDataState extends State<ViewData> {
           return Center(
             child: CircularProgressIndicator(),
           );
+         
         },
       ),
     ));
