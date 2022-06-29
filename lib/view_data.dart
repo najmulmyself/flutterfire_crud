@@ -64,10 +64,10 @@ class _ViewDataState extends State<ViewData> {
             .collection('form')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData && snapshot.data.size == 0) {
+          if (snapshot.hasData && snapshot.data.size == 0) {
+            // need to declare it first to show [no data found]
             return Center(child: Text('No Data found'));
-          }
-          else if (snapshot.hasData) {
+          } else if (snapshot.hasData) {
             final docs = snapshot.data!.docs;
             // print(docs[0].id);
             return ListView.builder(
@@ -85,6 +85,7 @@ class _ViewDataState extends State<ViewData> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => ViewDetails(
+                                    docId: docs[i].id,
                                     firstName: data['firsname'],
                                     lastName: data['lastname'],
                                     checkValue: data['myCheckValue1'],
@@ -107,8 +108,16 @@ class _ViewDataState extends State<ViewData> {
                             usr
                                 .doc(widget.uid)
                                 .collection('form')
-                                .doc(docId)
-                                .update({});
+                                .doc(docs[i].id)
+                                .update(
+                              {
+                                "firsname": "Najmul",
+                                "lastname": "Huda",
+                                "username": "najmulmyself"
+                              },
+                            ).then(
+                              (value) => print('Data Updated'),
+                            );
                           },
                           child: Icon(Icons.edit),
                         ),
@@ -154,7 +163,6 @@ class _ViewDataState extends State<ViewData> {
           return Center(
             child: CircularProgressIndicator(),
           );
-         
         },
       ),
     ));
