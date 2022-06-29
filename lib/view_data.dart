@@ -13,6 +13,7 @@ class ViewData extends StatefulWidget {
 
 class _ViewDataState extends State<ViewData> {
   List data = [];
+  String docId = "";
   // late String? uid = widget.uid;
 
   // final user;
@@ -65,6 +66,11 @@ class _ViewDataState extends State<ViewData> {
             final docs = snapshot.data!.docs;
             return ListView.builder(
               itemBuilder: (_, i) {
+                // snapshot.data.docs.forEach(
+                //   (element) {
+                //     docId = element.id;
+                //   },
+                // );
                 final data = docs[i].data();
                 return Center(
                   child: GestureDetector(
@@ -90,13 +96,31 @@ class _ViewDataState extends State<ViewData> {
                       child: ListTile(
                         leading: GestureDetector(
                           onTap: () {
-                            
+                            CollectionReference usr =
+                                FirebaseFirestore.instance.collection('users');
+                            usr
+                                .doc(widget.uid)
+                                .collection('form')
+                                .doc(docId)
+                                .update({});
                           },
                           child: Icon(Icons.edit),
                         ),
                         title: Text('${data['firsname']} ${data['lastname']}'),
                         subtitle: Text('${data['username']}'),
-                        trailing: Icon(Icons.delete),
+                        trailing: GestureDetector(
+                          onTap: () {
+                            snapshot.data.docs.forEach(
+                              (element) {
+                                docId = element.id;
+                            print(docId);
+                              },
+                            );
+                            user.doc(docId);
+                            print(docId);
+                          },
+                          child: Icon(Icons.delete),
+                        ),
                       ),
                     ),
                   ),
