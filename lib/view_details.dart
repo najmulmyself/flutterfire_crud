@@ -4,9 +4,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:recipe_app/data.dart';
 
-class ViewDetails extends StatelessWidget {
+class ViewDetails extends StatefulWidget {
   final firstName;
   final lastName;
   final checkValue1;
@@ -26,6 +27,14 @@ class ViewDetails extends StatelessWidget {
     this.dropDownValue,
     this.radioValue,
   });
+
+  @override
+  State<ViewDetails> createState() => _ViewDetailsState();
+}
+
+class _ViewDetailsState extends State<ViewDetails> {
+  String myDropDownValue = '';
+  var genderOptions = ['Male', 'Female', 'Other'];
   @override
   Widget build(BuildContext context) {
     // Future updateData() async {
@@ -88,6 +97,35 @@ class ViewDetails extends StatelessWidget {
                     ),
                   ),
                 ),
+                FormBuilderDropdown<String>(
+                  // autovalidate: true,
+                  name: 'gender',
+                  decoration: InputDecoration(
+                    labelText: 'Gender',
+                  ),
+                  hint: const Text('Select Gender'),
+                  items: genderOptions
+                      .map((gender) => DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: gender,
+                            child: Text(gender),
+                          ))
+                      .toList(),
+                  validator: (gender) {
+                    if (gender.toString() == "null") {
+                      print('dropdown value null');
+                    } else {
+                      myDropDownValue = gender.toString();
+                      print(myDropDownValue);
+                    }
+                  },
+                  onChanged: (val) {
+                    setState(() {
+                      print(val);
+                    });
+                  },
+                  valueTransformer: (val) => val?.toString(),
+                ),
               ],
             ),
             actions: [
@@ -115,10 +153,10 @@ class ViewDetails extends StatelessWidget {
                     validate = false;
                     CollectionReference user = FirebaseFirestore.instance
                         .collection('users')
-                        .doc(uid)
+                        .doc(widget.uid)
                         .collection('form');
 
-                    user.doc(docId).update(
+                    user.doc(widget.docId).update(
                       {
                         "firsname": updateFirstName.text,
                         "lastname": updateLastName.text,
@@ -149,8 +187,6 @@ class ViewDetails extends StatelessWidget {
       // print(updateLastName.text);
     }
 
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Details'),
@@ -159,11 +195,11 @@ class ViewDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "First Name : $firstName",
+            "First Name : ${widget.firstName}",
             style: TextStyle(fontSize: 20),
           ),
           Text(
-            "Last Name :$lastName",
+            "Last Name :${widget.lastName}",
             style: TextStyle(fontSize: 20),
           ),
           Text(
@@ -174,13 +210,13 @@ class ViewDetails extends StatelessWidget {
           Card(
             child: Column(
               children: [
-                for (var item in checkValue1)
+                for (var item in widget.checkValue1)
                   Column(
                     children: [
                       Text(item),
                     ],
                   ),
-                for (var item in checkValue2)
+                for (var item in widget.checkValue2)
                   Column(
                     children: [
                       Text(item),
@@ -190,9 +226,9 @@ class ViewDetails extends StatelessWidget {
             ),
           ),
           Text('RadioValue'),
-          Text(' $radioValue'),
+          Text(' ${widget.radioValue}'),
           Text('DropDown Value'),
-          Text(' $dropDownValue'),
+          Text(' ${widget.dropDownValue}'),
           ElevatedButton(
             onPressed: () {
               showDia();
