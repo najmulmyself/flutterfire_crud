@@ -127,8 +127,12 @@ class ViewDetails extends StatelessWidget {
                     ).then(
                       (value) => Navigator.of(context).pop(),
                     );
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Updated'),backgroundColor: Colors.green,),);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Updated'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
                   }
                 },
                 child: Container(
@@ -144,6 +148,8 @@ class ViewDetails extends StatelessWidget {
       // print(updateUserName.text);
       // print(updateLastName.text);
     }
+
+
 
     return Scaffold(
       appBar: AppBar(

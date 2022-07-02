@@ -81,6 +81,7 @@ class _ViewDataState extends State<ViewData> {
                 return Center(
                   child: GestureDetector(
                     onTap: () {
+                
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -89,9 +90,9 @@ class _ViewDataState extends State<ViewData> {
                                     firstName: data['firsname'],
                                     lastName: data['lastname'],
                                     checkValue1: data['myCheckValue1'],
-                                    checkValue2:data['myCheckValue2'],
-                                    dropDownValue:data['myDropDownValue'],
-                                    radioValue:data['myRadioValue1'],
+                                    checkValue2: data['myCheckValue2'],
+                                    dropDownValue: data['myDropdownValue'],
+                                    radioValue: data['myRadioValue1'],
                                     uid: uid,
                                   )));
                     },

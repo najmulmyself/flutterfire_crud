@@ -23,7 +23,7 @@ class _SignInState extends State<SignIn> {
       final UserCredential? userCredential = await _auth
           .signInWithEmailAndPassword(email: email, password: password);
       print(userCredential!.user!.uid);
-      final uid = userCredential!.user!.uid;
+      final uid = userCredential.user!.uid;
       if (userCredential != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
