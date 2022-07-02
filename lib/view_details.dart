@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors
 
 // import 'dart:html';
 
@@ -38,6 +38,8 @@ class ViewDetails extends StatelessWidget {
     //   return ;
     // }
 
+    bool validate = false;
+
     late TextEditingController updateFirstName = TextEditingController();
     late TextEditingController updateLastName = TextEditingController();
     late TextEditingController updateUserName = TextEditingController();
@@ -55,6 +57,7 @@ class ViewDetails extends StatelessWidget {
                   child: TextField(
                     controller: updateFirstName,
                     decoration: InputDecoration(
+                      errorText: validate ? "value can't be null" : null,
                       border: OutlineInputBorder(),
                       hintText: 'First Name',
                       labelText: 'First Name',
@@ -66,6 +69,7 @@ class ViewDetails extends StatelessWidget {
                   child: TextField(
                     controller: updateLastName,
                     decoration: InputDecoration(
+                      errorText: validate ? "value can't be null" : null,
                       border: OutlineInputBorder(),
                       hintText: 'Last Name',
                       labelText: 'Last Name',
@@ -77,6 +81,7 @@ class ViewDetails extends StatelessWidget {
                   child: TextField(
                     controller: updateUserName,
                     decoration: InputDecoration(
+                      errorText: validate ? "value can't be null" : null,
                       border: OutlineInputBorder(),
                       hintText: 'Username',
                       labelText: 'Username',
@@ -87,21 +92,44 @@ class ViewDetails extends StatelessWidget {
             ),
             actions: [
               TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancel')),
+              TextButton(
                 onPressed: () {
-                  CollectionReference user = FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(uid)
-                      .collection('form');
+                  if (updateFirstName.text.isEmpty &&
+                      updateLastName.text.isEmpty &&
+                      updateUserName.text.isEmpty) {
+                    validate = true;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Field cant be Empty',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  } else {
+                    validate = false;
+                    CollectionReference user = FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(uid)
+                        .collection('form');
 
-                  user.doc(docId).update(
-                    {
-                      "firsname": updateFirstName.text,
-                      "lastname": updateLastName.text,
-                      "username": updateUserName.text
-                    },
-                  ).then(
-                    (value) => Navigator.of(context).pop(),
-                  );
+                    user.doc(docId).update(
+                      {
+                        "firsname": updateFirstName.text,
+                        "lastname": updateLastName.text,
+                        "username": updateUserName.text
+                      },
+                    ).then(
+                      (value) => Navigator.of(context).pop(),
+                    );
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Updated'),backgroundColor: Colors.green,),);
+                  }
                 },
                 child: Container(
                   padding: const EdgeInsets.all(14),
@@ -133,7 +161,7 @@ class ViewDetails extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           Text(
-            "UserName :",
+            "UserName : ",
             style: TextStyle(fontSize: 20),
           ),
           Text("Checked Item"),
@@ -155,11 +183,10 @@ class ViewDetails extends StatelessWidget {
               ],
             ),
           ),
-                  Text('RadioValue'),
-                  Text(' $radioValue'),
-
-                  Text('DropDown Value'),
-                  Text(' $dropDownValue'),
+          Text('RadioValue'),
+          Text(' $radioValue'),
+          Text('DropDown Value'),
+          Text(' $dropDownValue'),
           ElevatedButton(
             onPressed: () {
               showDia();
