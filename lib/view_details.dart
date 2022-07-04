@@ -5,7 +5,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:recipe_app/data.dart';
 
 class ViewDetails extends StatefulWidget {
   final firstName;
@@ -33,6 +32,8 @@ class ViewDetails extends StatefulWidget {
 }
 
 class _ViewDetailsState extends State<ViewDetails> {
+
+  // stateformkey need to declare
   // final formKey = GlobalKey<FormState>();
 
   void onChanged(dynamic val) => print(val.toString());
