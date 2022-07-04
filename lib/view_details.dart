@@ -116,13 +116,14 @@ class _ViewDetailsState extends State<ViewDetails> {
                       print('dropdown value null');
                     } else {
                       myDropDownValue = gender.toString();
-                      print(myDropDownValue);
+                      print('line no 119 : $myDropDownValue');
                     }
                   },
                   onChanged: (val) {
                     setState(() {
-                      print(val);
+                      myDropDownValue = val!;
                     });
+                    print('133 : $val');
                   },
                   valueTransformer: (val) => val?.toString(),
                 ),
@@ -160,7 +161,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                       {
                         "firsname": updateFirstName.text,
                         "lastname": updateLastName.text,
-                        "username": updateUserName.text
+                        "username": updateUserName.text,
+                        "myDropdownValue": myDropDownValue,
                       },
                     ).then(
                       (value) => Navigator.of(context).pop(),

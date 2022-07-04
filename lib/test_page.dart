@@ -409,7 +409,7 @@ class _TestFormPageState extends State<TestFormPage> {
                     print('dropdown value null');
                   } else {
                     myDropDownValue = gender.toString();
-                    print(myDropDownValue);
+                    print("another test here $myDropDownValue");
                   }
                 },
                 onChanged: (val) {
