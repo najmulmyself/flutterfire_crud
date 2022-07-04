@@ -121,7 +121,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      myDropDownValue = val!;
+                      myDropDownValue = val!; // updated myDropDownValue // fixed update firebase
                     });
                     print('133 : $val');
                   },
