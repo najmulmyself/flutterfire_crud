@@ -33,8 +33,12 @@ class ViewDetails extends StatefulWidget {
 }
 
 class _ViewDetailsState extends State<ViewDetails> {
+  // final formKey = GlobalKey<FormState>();
+
+  void onChanged(dynamic val) => print(val.toString());
+
   String myDropDownValue = '';
-  List ? myCheckValue = [];
+  List? myCheckValue = [];
   var genderOptions = ['Male', 'Female', 'Other'];
   @override
   Widget build(BuildContext context) {
@@ -151,10 +155,14 @@ class _ViewDetailsState extends State<ViewDetails> {
                           content: Text('Please Select a value'),
                         ),
                       );
-                      return null;
+                      // return null;
                     } else {
                       myCheckValue = value;
                       print(myCheckValue);
+                      print(value);
+                      // setState(() {
+                      //   print(value);
+                      // });
                     }
                   },
                 ),
@@ -168,6 +176,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                   child: Text('Cancel')),
               TextButton(
                 onPressed: () {
+                  // formKey.currentState!.validate(); // this needs to call once
                   if (updateFirstName.text.isEmpty &&
                       updateLastName.text.isEmpty &&
                       updateUserName.text.isEmpty) {
