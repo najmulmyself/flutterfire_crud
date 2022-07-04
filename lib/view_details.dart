@@ -34,6 +34,7 @@ class ViewDetails extends StatefulWidget {
 
 class _ViewDetailsState extends State<ViewDetails> {
   String myDropDownValue = '';
+  List ? myCheckValue = [];
   var genderOptions = ['Male', 'Female', 'Other'];
   @override
   Widget build(BuildContext context) {
@@ -121,11 +122,41 @@ class _ViewDetailsState extends State<ViewDetails> {
                   },
                   onChanged: (val) {
                     setState(() {
-                      myDropDownValue = val!; // updated myDropDownValue // fixed update firebase
+                      myDropDownValue =
+                          val!; // updated myDropDownValue // fixed update firebase
                     });
                     print('133 : $val');
                   },
                   valueTransformer: (val) => val?.toString(),
+                ),
+
+                // checkbox
+
+                FormBuilderCheckboxGroup(
+                  name: 'Gadget',
+                  orientation: OptionsOrientation.vertical,
+                  options: const [
+                    FormBuilderFieldOption(value: 'Phone'),
+                    FormBuilderFieldOption(value: 'Desktop'),
+                    FormBuilderFieldOption(value: 'Laptop'),
+                    FormBuilderFieldOption(value: 'Tablet'),
+                  ],
+                  wrapDirection: Axis.horizontal,
+                  // wrapVerticalDirection: VerticalDirection.down,
+                  // onSaved: onChanged,
+                  validator: (value) {
+                    if (value == 'null') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please Select a value'),
+                        ),
+                      );
+                      return null;
+                    } else {
+                      myCheckValue = value;
+                      print(myCheckValue);
+                    }
+                  },
                 ),
               ],
             ),
@@ -163,6 +194,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                         "lastname": updateLastName.text,
                         "username": updateUserName.text,
                         "myDropdownValue": myDropDownValue,
+                        "myCheckValue1": myCheckValue,
                       },
                     ).then(
                       (value) => Navigator.of(context).pop(),
@@ -218,12 +250,12 @@ class _ViewDetailsState extends State<ViewDetails> {
                       Text(item),
                     ],
                   ),
-                for (var item in widget.checkValue2)
-                  Column(
-                    children: [
-                      Text(item),
-                    ],
-                  ),
+                // for (var item in widget.checkValue2)
+                //   Column(
+                //     children: [
+                //       Text(item),
+                //     ],
+                //   ),
               ],
             ),
           ),
@@ -231,6 +263,7 @@ class _ViewDetailsState extends State<ViewDetails> {
           Text(' ${widget.radioValue}'),
           Text('DropDown Value'),
           Text(' ${widget.dropDownValue}'),
+          Text('CheckboxValue'),
           ElevatedButton(
             onPressed: () {
               showDia();

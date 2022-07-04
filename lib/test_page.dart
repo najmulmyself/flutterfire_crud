@@ -4,9 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:radio_button_form_field/radio_button_form_field.dart';
-import 'package:checkbox_formfield/checkbox_formfield.dart';
-import 'package:multiselect_formfield/multiselect_formfield.dart';
-import 'package:recipe_app/api/database.dart';
 import 'package:recipe_app/view_data.dart';
 
 class TestFormPage extends StatefulWidget {
@@ -122,11 +119,13 @@ class _TestFormPageState extends State<TestFormPage> {
           ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (ctx) => ViewData(
-                            uid: uid,
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) => ViewData(
+                    uid: uid,
+                  ),
+                ),
+              );
             },
             child: Text('ViewData'),
           ),
@@ -373,7 +372,9 @@ class _TestFormPageState extends State<TestFormPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {}
+                        if (formKey.currentState!.validate()) {
+                          // this needs to call once
+                        }
                         // print(myCheckValue);
                         print(myUserName.text);
                         print(myFirstName.text);
@@ -382,8 +383,10 @@ class _TestFormPageState extends State<TestFormPage> {
                         print(myConfirmPass.text);
 
                         addData();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Added Data Successfully'),backgroundColor: Colors.green,));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Added Data Successfully'),
+                          backgroundColor: Colors.green,
+                        ));
                       },
                       child: Text('Submit'),
                     ),
